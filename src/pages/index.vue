@@ -1,25 +1,23 @@
 <script setup>
     import { ref } from '@vue/reactivity';
-import {useJokes} from '../composables/useJokes.js';
+import {useAPI} from '../composables/useAPI';
     
-    const {jokes, search} = useJokes();
-    
-    const searchItem = ref("");
+    const {seasons} = useAPI();
 </script>
 
 <template>
-    <div>
-        <input type="text" v-model="searchItem"
-        @change="search(searchItem)"
-        placeholder="Search a Joke" 
-        class="w-full py-4 mt-16 text-xl text-center rounded-full" />
-        <div class="grid grid-cols-2 gap-16 pt-16">
-           <div v-for="(joke, index) in jokes" :key="index">
-               <p>
-                   {{joke}}
-               </p>
-           </div>
-        </div>
-
+    <div class="mt-16">
+        <ul class="grid grid-cols-3 gap-12">
+            <router-link class="p-4 bg-white rounded-lg shadow-2xl cursor-pointer hover:scale-105"
+            v-for="season in seasons" :key="season.id"
+            :to="`season${season.id}`">
+            <div>
+                <h3 class="text-xl font-semibold tracking-tight">
+                   Season {{season.id}} 
+                </h3>
+            </div>
+                
+            </router-link>
+        </ul>
     </div>
 </template>
